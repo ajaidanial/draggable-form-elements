@@ -1,5 +1,4 @@
 .container_drag {
-	text-align: center;
 	height: 100%;
 }
 
@@ -62,4 +61,26 @@
 	padding: 10px;
 	height: 100%;
 	background-color: white;
+}
+
+.elements_holder .single_element_holder {
+	padding: 10px;
+	background-color: #f7f7f9;
+	margin: 10px 0px;
+	border-radius: 4px;
+	border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.elements_holder .single_element_holder p {
+	padding: 5px 0px;
+	margin: 0px;
+}
+
+.elements_holder .single_element_holder *,
+.form_building_area .single_element_holder * {
+	width: 100%;
+}
+
+.form_building_area .single_element_holder * {
+	margin: 5px 0px;
 }

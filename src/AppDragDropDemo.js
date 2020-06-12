@@ -26,19 +26,11 @@ export default class AppDragDropDemo extends Component {
         element: <input className="input_week" type="week" />
       },
       {
-        id: 'input_week',
-        element: <input className="input_week" type="week" />
-      },
-      {
         id: 'input_file',
         element: <input className="input_file" type="file" />
       }
     ],
-    tasks: [
-      { name: 'Learn Angular', category: 'wip', bgcolor: 'yellow' },
-      { name: 'React', category: 'wip', bgcolor: 'pink' },
-      { name: 'Vue', category: 'complete', bgcolor: 'skyblue' }
-    ]
+    selected_form_elements: []
   }
 
   onDragStart = (ev, id) => {
@@ -49,38 +41,43 @@ export default class AppDragDropDemo extends Component {
     ev.preventDefault()
   }
 
-  onDrop = (ev, cat) => {
-    let id = ev.dataTransfer.getData('id')
+  onDrop = (event) => {
+    let id = event.dataTransfer.getData('id')
+    let selected_form_elements = this.state.selected_form_elements
 
-    let tasks = this.state.tasks.filter((task) => {
-      if (task.name === id) {
-        task.category = cat
+    this.state.available_form_elements.forEach((element) => {
+      if (element.id === id) {
+        selected_form_elements.push(element)
       }
-      return task
     })
 
     this.setState({
       ...this.state,
-      tasks
+      selected_form_elements: selected_form_elements
     })
   }
 
   render() {
-    let tasks = {
-      wip: [],
-      complete: []
-    }
-
-    this.state.tasks.forEach((t) => {
-      tasks[t.category].push(
+    let available_form_elements = []
+    this.state.available_form_elements.forEach((element) => {
+      available_form_elements.push(
         <div
-          className="draggable"
+          className="single_element_holder"
           draggable
-          key={t.name}
-          onDragStart={(e) => this.onDragStart(e, t.name)}
-          style={{ backgroundColor: t.bgcolor }}
+          key={element.id}
+          onDragStart={(e) => this.onDragStart(e, element.id)}
         >
-          {t.name}
+          <p>{element.id.replace('_', ' - ')}</p>
+          {element.element}
+        </div>
+      )
+    })
+
+    let selected_form_elements = []
+    this.state.selected_form_elements.forEach((element) => {
+      selected_form_elements.push(
+        <div className="single_element_holder" key={element.id}>
+          {element.element}
         </div>
       )
     })
@@ -98,7 +95,7 @@ export default class AppDragDropDemo extends Component {
           >
             <h4 className="header">Form elements</h4>
             <div className="content_container">
-              <div className="elements_holder">{tasks.wip}</div>
+              <div className="elements_holder">{available_form_elements}</div>
             </div>
           </div>
 
@@ -106,13 +103,15 @@ export default class AppDragDropDemo extends Component {
           <div
             className="build_form_container col-md-8"
             onDragOver={(e) => this.onDragOver(e)}
-            onDrop={(e) => this.onDrop(e, 'complete')}
+            onDrop={(e) => this.onDrop(e)}
           >
             <h4 className="header">Form Building Area</h4>
             <div className="content_container form_container">
               <form className="form">
                 <h5>Form Title</h5>
-                <div className="form_building_area">{tasks.complete}</div>
+                <div className="form_building_area">
+                  {selected_form_elements}
+                </div>
                 <button className="btn btn-primary submit_button" type="button">
                   Submit Form
                 </button>
