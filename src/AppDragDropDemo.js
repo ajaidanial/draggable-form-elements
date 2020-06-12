@@ -23,7 +23,7 @@ export default class AppDragDropDemo extends Component {
     let id = ev.dataTransfer.getData('id')
 
     let tasks = this.state.tasks.filter((task) => {
-      if (task.name == id) {
+      if (task.name === id) {
         task.category = cat
       }
       return task
@@ -36,7 +36,7 @@ export default class AppDragDropDemo extends Component {
   }
 
   render() {
-    var tasks = {
+    let tasks = {
       wip: [],
       complete: []
     }
@@ -56,25 +56,39 @@ export default class AppDragDropDemo extends Component {
     })
 
     return (
-      <div className="container-drag">
-        <h2 className="header">DRAG & DROP DEMO</h2>
-        <div
-          className="wip"
-          onDragOver={(e) => this.onDragOver(e)}
-          onDrop={(e) => {
-            this.onDrop(e, 'wip')
-          }}
-        >
-          <span className="task-header">WIP</span>
-          {tasks.wip}
-        </div>
-        <div
-          className="droppable"
-          onDragOver={(e) => this.onDragOver(e)}
-          onDrop={(e) => this.onDrop(e, 'complete')}
-        >
-          <span className="task-header">COMPLETED</span>
-          {tasks.complete}
+      <div className="container_drag container-fluid">
+        <div className="row">
+          {/* draggable elements for the form */}
+          <div
+            className="form_elements_container col-md-4"
+            onDragOver={(e) => this.onDragOver(e)}
+            onDrop={(e) => {
+              this.onDrop(e, 'wip')
+            }}
+          >
+            <h4 className="header">Form elements</h4>
+            <div className="content_container">
+              <div className="elements_holder">{tasks.wip}</div>
+            </div>
+          </div>
+
+          {/* form build using the draggable elements */}
+          <div
+            className="build_form_container col-md-8"
+            onDragOver={(e) => this.onDragOver(e)}
+            onDrop={(e) => this.onDrop(e, 'complete')}
+          >
+            <h4 className="header">Form Building Area</h4>
+            <div className="content_container form_container">
+              <form className="form">
+                <h5>Form Title</h5>
+                <div className="form_building_area">{tasks.complete}</div>
+                <button className="btn btn-primary submit_button" type="button">
+                  Submit Form
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     )
