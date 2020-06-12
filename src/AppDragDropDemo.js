@@ -4,6 +4,36 @@ import './App.css'
 
 export default class AppDragDropDemo extends Component {
   state = {
+    available_form_elements: [
+      {
+        id: 'input_text',
+        element: <input className="input_text" type="text" />
+      },
+      {
+        id: 'input_password',
+        element: <input className="input_password" type="password" />
+      },
+      {
+        id: 'input_date',
+        element: <input className="input_date" type="date" />
+      },
+      {
+        id: 'input_time',
+        element: <input className="input_time" type="time" />
+      },
+      {
+        id: 'input_week',
+        element: <input className="input_week" type="week" />
+      },
+      {
+        id: 'input_week',
+        element: <input className="input_week" type="week" />
+      },
+      {
+        id: 'input_file',
+        element: <input className="input_file" type="file" />
+      }
+    ],
     tasks: [
       { name: 'Learn Angular', category: 'wip', bgcolor: 'yellow' },
       { name: 'React', category: 'wip', bgcolor: 'pink' },
